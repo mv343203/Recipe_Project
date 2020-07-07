@@ -11,6 +11,7 @@ import vome.springframework.repositories.CategoryRepository;
 import vome.springframework.repositories.RecipeRepository;
 import vome.springframework.repositories.UnitOfMeasureRepository;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     }
 
     @Override
+    @Transactional  // allows everything to run in the same context and avoids lazy fetch errors
     public void onApplicationEvent(ContextRefreshedEvent event) {
         recipeRepository.saveAll(getRecipes());//this will save everything coming out of the repositories
         log.debug("Loading Bootstrap Data");
