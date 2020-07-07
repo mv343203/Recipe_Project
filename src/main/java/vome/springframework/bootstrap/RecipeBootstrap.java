@@ -2,6 +2,7 @@ package vome.springframework.bootstrap;
 
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-
+@Slf4j //logger gives access to logger
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {//class created to put data into
     //the program in as it starts up "BOOTSTRAP"
@@ -37,6 +38,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         recipeRepository.saveAll(getRecipes());//this will save everything coming out of the repositories
+        log.debug("Loading Bootstrap Data");
     }
 
     private List<Recipe> getRecipes() {//created private method to return this list of recipes upon startup
